@@ -84,7 +84,7 @@ namespace Extra1_Hangman
                 }
             }
             return wordIsFound;
-            //Test by: reunning method, checking if the bool returned is correct or not.
+            //Test by: running method, checking if the bool returned is correct or not.
         }
 
         /// <summary>
