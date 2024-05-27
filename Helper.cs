@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -53,8 +54,8 @@ namespace Extra1_Hangman
         /// <returns></returns>
         public static string ChooseSecretWord()
         {
-            //TODO: Fill out "words" from a file.
-            string[] words = { "TESTER", "CANVAS", "TOLOUSE" };
+            string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\secretwords.txt");
+            string[] words = File.ReadAllLines(filePath);
             Random random = new Random();
             int randomNumber = random.Next(0, words.Length);
             return words[randomNumber];
