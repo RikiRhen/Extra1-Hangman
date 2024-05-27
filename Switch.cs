@@ -23,14 +23,15 @@ namespace Extra1_Hangman
                 {
                     case "START":
                         int triesLeft = 10;
-                        List<Letter> secretWord = Helper.ParseSecretWord(Helper.ChooseSecretWord());
+                        //List<Letter> secretWord = Helper.ParseSecretWord(Helper.ChooseSecretWord());
+                        char[] secretWord = Helper.ParseSecretWord(Helper.ChooseSecretWord());
                         StringBuilder guesses = new();
-                        bool letterWasFound = false;
+                        
 
-                        Helper.RunGame(ref triesLeft, secretWord, guesses, ref letterWasFound);
+                        Helper.RunGame(ref triesLeft, secretWord, guesses);
 
                         //Checks if the entire word has been discovered.
-                        if (Helper.HasWordBeenDiscovered(secretWord))
+                        if (Helper.HasWordBeenDiscovered(secretWord, guesses))
                         {
                             break;
                         }
@@ -38,7 +39,7 @@ namespace Extra1_Hangman
                         //Checks if player has run out of tries.
                         if (triesLeft == 0)
                         {
-                            Helper.GameOver();
+                            Helper.GameOver(secretWord);
                         }
 
                         break;
