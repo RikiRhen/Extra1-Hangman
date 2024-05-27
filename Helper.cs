@@ -49,9 +49,9 @@ namespace Extra1_Hangman
             //Test by: running method, checking if returned word is among the words in the source file.
         }
 
-            //TODO: Task asks to have correct letters in an array.
+
         /// <summary>
-        /// Takes an input string, parses it to a list of Letter-classes and returns the list.
+        /// Takes an input string, parses it to a char-array and returns the array.
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
@@ -59,20 +59,17 @@ namespace Extra1_Hangman
         {
             string selectedWord = input;
             List<Char> wordInChars = selectedWord.ToUpper().Where(c => !char.IsWhiteSpace(c)).ToList();
-            //List<Letter> result = new List<Letter>();
             char[] result = wordInChars.ToArray();
             foreach (char c in wordInChars)
             {
-                //Letter l = new Letter(c);
                 result[wordInChars.IndexOf(c)] = c;
-                //result.Add(l);
             }
             return result;
-            //Test by: running method, making sure the return is a list of Letter-classes that spell out the input string.
+            //Test by: running method, making sure the returned array is properly parsed.
         }
 
         /// <summary>
-        /// Takes the secret word as a List<Letter>. Checks if the entire secret word has been discovered. Returns bool.
+        /// Takes the secret word as a char-array. Checks if the entire secret word has been discovered. Returns bool.
         /// </summary>
         /// <param name="secretWord"></param>
         /// <returns></returns>
@@ -91,7 +88,7 @@ namespace Extra1_Hangman
         }
 
         /// <summary>
-        /// Takes a List<Letter> and prints out the found letters and replaces non-found letters with _.
+        /// Takes a char-array and prints out the found letters and replaces non-found letters with _.
         /// </summary>
         /// <param name="secretWord"></param>
         public static void PrintSecretWordLetters(char[] secretWord, StringBuilder guesses)
@@ -220,7 +217,7 @@ namespace Extra1_Hangman
         }
 
         /// <summary>
-        /// Takes the secret word as a List<Letter> as parameter. Prints out the victory text together with the secret word. 
+        /// Takes the secret word as a char-array as parameter. Prints out the victory text together with the secret word. 
         /// </summary>
         /// <param name="secretWord"></param>
         public static void VictoryText(char[] secretWord)
