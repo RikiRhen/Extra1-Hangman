@@ -22,41 +22,23 @@ namespace Extra1_Hangman
                 switch (switchChoice)
                 {
                     case "START":
+                        int triesLeft = 10;
                         List<Letter> secretWord = Helper.ParseSecretWord(Helper.ChooseSecretWord());
                         StringBuilder guesses = new();
                         bool letterWasFound = false;
-                        
-                        Console.WriteLine("\nGame start!");
-                        //Keeps looping until player runs out of guesses.
-                        int triesLeft = 10;
-                        while (triesLeft != 0)
+
+                        Helper.RunGame(ref triesLeft, secretWord, guesses, ref letterWasFound);
+
+                        //Checks if the entire word has been discovered.
+                        if (Helper.HasWordBeenDiscovered(secretWord))
                         {
-                            Console.WriteLine("You have: " + triesLeft + " tries left");
-                            //Prints out made guesses if any have been made.
-                            if (guesses.Length > 0)
-                            {
-                                Console.WriteLine("Guesses made: " + guesses.ToString());
-                            }
-
-                            //Prints out found letters in the word, and replaces non-found letters with _.
-                            Helper.PrintSecretWordLetters(secretWord);
-
-                            //TODO: Make the player able to guess on the whole word.
-                            //Player makes a guess, this guess is compared to the non-found letters in the secretWord list.
-                            char guess = Helper.MakeSureInputIsSingleChar(Helper.TakeInput());
-                            Helper.CheckGuessedChar(secretWord, guesses, ref letterWasFound, ref triesLeft, guess);
-
-                            //Checks if the entire word has been discovered.
-                            if (Helper.HasWordBeenDiscovered(secretWord))
-                            {
-                                Helper.VictoryText(secretWord);
-                                break;
-                            }
-
+                            break;
                         }
+
+                        //Checks if player has run out of tries.
                         if (triesLeft == 0)
                         {
-                            Console.WriteLine("Game over! You ran out of tries.\n\n");
+                            Helper.GameOver();
                         }
 
                         break;
@@ -70,9 +52,5 @@ namespace Extra1_Hangman
                 }
             }
         }
-
-
-
-
     }
 }

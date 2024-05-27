@@ -118,6 +118,7 @@ namespace Extra1_Hangman
                 }
             }
             Console.WriteLine();
+            //Void method, can't be tested.
         }
 
         /// <summary>
@@ -160,6 +161,7 @@ namespace Extra1_Hangman
                 triesLeft--;
             }
             letterWasFound = false;
+            //Void method, can't be tested.
         }
 
         /// <summary>
@@ -173,12 +175,87 @@ namespace Extra1_Hangman
             {
                 finalWord += l.letter;
             }
-            Console.WriteLine(@"\______/\_~* ^ *~_/\______/" +
+            Console.WriteLine("\n----------------------------\n" +
                 "You found the word! Congratulations!\n" +
                 "Secret word: " + finalWord + "\n" +
-                @"\______/\_~* ^ *~_/\______/" +
-                "\n \n");
+                "----------------------------\n\n");
             //No real reason to test. Only manual testing to check formating.
         }
+
+        /// <summary>
+        /// Base-method of running the game and calling other helpermethods.
+        /// </summary>
+        /// <param name="triesLeft"></param>
+        /// <param name="secretWord"></param>
+        /// <param name="guesses"></param>
+        /// <param name="letterWasFound"></param>
+        public static void RunGame(ref int triesLeft, List<Letter> secretWord, StringBuilder guesses, ref bool letterWasFound)
+        {
+            Console.WriteLine("\nGame start!");
+            //Keeps looping until player runs out of guesses.
+
+            while (triesLeft != 0)
+            {
+                Console.WriteLine("You have: " + triesLeft + " tries left");
+                //Prints out made guesses if any have been made.
+                if (guesses.Length > 0)
+                {
+                    Console.WriteLine("Guesses made: " + guesses.ToString());
+                }
+
+                //Prints out found letters in the word, and replaces non-found letters with _.
+                PrintSecretWordLetters(secretWord);
+
+                //Player makes a guess, checks if the guess is a single character or a whole word.
+                string guess = TakeInput().ToUpper();
+
+                //If guess is a single letter, checks if the letter is in the word.
+                if (guess.Length == 1)
+                {
+                    CheckGuessedChar(secretWord, guesses, ref letterWasFound, ref triesLeft, Convert.ToChar(guess));
+                } 
+
+                //If guess is more than 2 characters, will assume input was a word to try and solve the riddle. Will check if the input word is the same as the secret word.
+                else if (guess.Length > 1)
+                {
+                    //Build the secret word to a comparable string.
+                    StringBuilder compare = new();
+                    foreach (Letter l in secretWord)
+                    {
+                        compare.Append(l.letter);
+                    }
+
+                    //Check if the guess is the same as the secret word. If it is, print victory text and break the loop.
+                    if (guess.ToUpper().Equals(compare.ToString()))
+                    {
+                        VictoryText(secretWord);
+                        break;
+                    }
+
+                    //If a single letter was given or the word was incorrect, remove a try.
+                    triesLeft--;
+                }
+                
+
+                //Checks if the entire word has been discovered.
+                if (HasWordBeenDiscovered(secretWord))
+                {
+                    VictoryText(secretWord);
+                    break;
+                }
+            }
+            //Void method, can't be tested.
+        }
+
+        /// <summary>
+        /// Prints out the Game Over screen.
+        /// </summary>
+        public static void GameOver()
+        {
+            Console.WriteLine("\n----------------------------\n" +
+                "Game over! You ran out of tries.\n" +
+                "----------------------------\n\n");
+        }
+        //No real reason to test. Only manual testing to check formating.
     }
 }
